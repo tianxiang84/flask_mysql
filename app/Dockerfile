@@ -10,11 +10,14 @@ EXPOSE 5000
 # instruction creates a directory with this name if it doesn�t exist
 WORKDIR /app
 
+RUN apt-get update
+RUN apt-get install -y python3-sqlalchemy
+
 # Install any needed packages specified in requirements.txt
 COPY requirements.txt /app
 RUN pip install -r requirements.txt
 
 # Run app.py when the container launches
 COPY app.py /app
-COPY *.html /app
+COPY templates /app/templates
 CMD python app.py

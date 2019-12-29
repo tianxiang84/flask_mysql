@@ -2,8 +2,15 @@ import mysql.connector
 import flask
 from flask import Flask, request, render_template
 
+
 app = flask.Flask(__name__)
 
+
+
+
+
+
+###########################################################
 @app.route('/login', methods=['POST', 'GET'])
 def login():
     error = None
@@ -15,8 +22,8 @@ def login():
             error = 'Invalid username/password'
     # the code below is executed if the request method
     # was GET or the credentials were invalid
-    return "OK."
-
+    return render_template('index.html')
+##########################################################################
 
 
 
