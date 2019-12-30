@@ -1,12 +1,28 @@
+from flask import Flask, request, render_template # Import Flask class
 import mysql.connector
-import flask
-from flask import Flask, request, render_template
+
+app = Flask(__name__) # create an instance of the Flask class called app
 
 
-app = flask.Flask(__name__)
+@app.route('/quiz')
+def quiz():
+    config = {
+                'user': 'devuser',
+                'password': 'devpass',
+                'host': 'db',
+                'port': '3306',
+                'database': 'tianxiang_db'
+             }
+    connection = mysql.connector.connect(**config)
 
+    cursor = connection.cursor()
+    sql_select_Query = "select * from vocabulary"
+    cursor.execute(sql_select_Query)
+    records = cursor.fetchall()
 
+    quiz_sentence = records[0][1]
 
+    return render_template('quiz.html', quiz_sentence=quiz_sentence)
 
 
 
@@ -27,7 +43,7 @@ def login():
 
 
 
-@app.route('/')
+@app.route('/') # use the route() decorator to tell Flask what URL should trigger our function.
 def hello_world():
     config = {
             'user': 'devuser',
